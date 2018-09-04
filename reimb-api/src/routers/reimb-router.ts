@@ -27,7 +27,7 @@ reimbRouter.get('', [
     async (req: Request, resp: Response) => {
         try {
             console.log("Customer movie retrieval");
-            let reimbs = await reimbDao.selectReimb();
+            let reimbs = await reimbDao.selectReimb(id, status);
             resp.json(reimbs);
         } catch (err) {
             resp.sendStatus(500);

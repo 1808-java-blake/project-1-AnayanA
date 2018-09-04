@@ -3,6 +3,7 @@ import path from 'path';
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import { userRouter } from './routers/user-router';
+import { reimbRouter } from './routers/reimb-router';
 
 
 // create app object from express
@@ -51,6 +52,7 @@ app.use((req, resp, next) => {
  * API Routers
  ********************************************************************************************/
 app.use('/users', userRouter);
+app.use('/reimb', reimbRouter);
 
 const server = app.listen(port, () => {
     console.log('App is running at http://')
