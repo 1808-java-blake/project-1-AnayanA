@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import bodyParser from 'body-parser';
 import session from 'express-session';
+import { userRouter } from './routers/user-router';
 
 
 // create app object from express
