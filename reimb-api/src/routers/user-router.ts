@@ -48,6 +48,7 @@ userRouter.post('/login', async (req, resp) => {
             resp.sendStatus(401);
         }
     } catch (err) {
+        console.log(err);
         resp.sendStatus(500);
     }
 })

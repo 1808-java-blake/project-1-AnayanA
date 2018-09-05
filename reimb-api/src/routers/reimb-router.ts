@@ -22,18 +22,18 @@ reimbRouter.get('', [
     }
 ]);
 
-reimbRouter.get('', [
-    authMiddleware('employee'),
-    async (req: Request, resp: Response) => {
-        try {
-            console.log("Customer movie retrieval");
-            let reimbs = await reimbDao.selectReimb(id, status);
-            resp.json(reimbs);
-        } catch (err) {
-            resp.sendStatus(500);
-        }
-    }
-]);
+// reimbRouter.get('', [
+//     authMiddleware('employee'),
+//     async (req: Request, resp: Response) => {
+//         try {
+//             console.log("Customer movie retrieval");
+//             let reimbs = await reimbDao.selectReimb(id, status);
+//             resp.json(reimbs);
+//         } catch (err) {
+//             resp.sendStatus(500);
+//         }
+//     }
+// ]);
 
 
  /**

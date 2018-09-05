@@ -32,7 +32,7 @@ export async function findByUsernameAndPassword(username: string, password: stri
      const resp = await client.query(
          `SELECT * FROM ers.users u
             WHERE u.username = $1
-            AND u.password = $2`, [username, password]);
+            AND u.pass = $2`, [username, password]);
     if(resp.rows.length !== 0) {
         return userConverter(resp.rows[0]);
     }

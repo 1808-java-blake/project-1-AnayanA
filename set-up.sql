@@ -16,17 +16,7 @@ CREATE TABLE users (
 	first_name VARCHAR(100) NOT NULL,
 	last_name VARCHAR(100) NOT NULL,
 	user_email VARCHAR(150) NOT NULL,
-	user_role_id INTEGER references user_roles(user_role_id)
-);
-
-CREATE TABLE reimbursement_status (
-	status_id SERIAL PRIMARY KEY,
-	status VARCHAR(10) NOT NULL
-);
-
-CREATE TABLE reimbursement_type (
-	type_id SERIAL PRIMARY KEY,
-	reimb_type VARCHAR(10) NOT NULL
+	user_role VARCHAR(10) NOT NULL
 );
 
 CREATE TABLE reimbursement (
@@ -37,6 +27,6 @@ CREATE TABLE reimbursement (
 	reimb_description VARCHAR(250),
 	reimb_author INTEGER references users(users_id) NOT NULL,
 	reimb_resolver INTEGER references users(users_id),
-	reimb_status_id INTEGER references reimbursement_status(status_id) NOT NULL,
-	reimb_type_id INTEGER references reimbursement_type(type_id) NOT NULL
+	reimb_status VARCHAR(10) NOT NULL,
+	reimb_type VARCHAR(10) NOT NULL
 )
