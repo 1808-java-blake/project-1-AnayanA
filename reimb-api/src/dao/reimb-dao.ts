@@ -7,12 +7,24 @@ import { SqlReimb } from "../dto/sql-reimb";
  * Retrieve all reimbursements or reimbursements depending on status
  *
  */
-export async function findAll(status: string): Promise<Reimb[]> {
+//
+export async function findAll(): Promise<Reimb[]> {
+    const client = await connectionPool.connect();
+    try {
+        const resp = await client.query(`SELECT * FROM ers.reimbursement`);
+        return resp.rows.map(reimbConverter);
+    } finally {
+        client.release();
+    }
+}
+
+
+export async function findFromStatus(status: string): Promise<Reimb[]> {
     const client = await connectionPool.connect();
     try {
         const resp = await client.query(
             `SELECT * FROM ers.reimbursement 
-            ${(status === '') ? ' ' : `WHERE reimb_status = $1`}`, [status]);
+            ${(status === '') ? '' : `WHERE reimb_status = $1`}`, [status]);
         return resp.rows.map(reimbConverter);
     } finally {
         client.release();
@@ -23,12 +35,12 @@ export async function findAll(status: string): Promise<Reimb[]> {
  /**
   * Retrieves all or select reimbursements submitted by a user
   */
-export async function selectReimb(id: number, status: string): Promise<Reimb[]> {
+export async function selectReimb( status: string): Promise<Reimb[]> {
     const client = await connectionPool.connect();
     try {
         const resp = await client.query(
             `SELECT * FROM ers.reimbursement WHERE user_id = $1
-            ${(status === '') ? ' ' : `WHERE reimb_status = $2`}`, [id, status]);
+            ${(status === ' ') ? '' : `WHERE reimb_status = $2`}`, [status]);
         return resp.rows.map(reimbConverter);
     } finally {
         client.release();

@@ -9,37 +9,40 @@ export const reimbRouter = express.Router();
 /**
  * Retrieves all reimburements
  */
-reimbRouter.get('', [
-    authMiddleware('FManager'),
+reimbRouter.get((''), [
+    //authMiddleware('FManager'),
     async (req: Request, resp: Response) => {
+        const status = '';
+        console.log(status);
         try {
-            console.log("Customer movie retrieval");
-            let reimbs = await reimbDao.findAll(status);
+            console.log("retrieving all reimbursements");
+            let reimbs = await reimbDao.findAll();
             resp.json(reimbs);
         } catch (err) {
+            console.log(err);
             resp.sendStatus(500);
         }
     }
 ]);
 
-// reimbRouter.get('', [
-//     authMiddleware('employee'),
-//     async (req: Request, resp: Response) => {
-//         try {
-//             console.log("Customer movie retrieval");
-//             let reimbs = await reimbDao.selectReimb(id, status);
-//             resp.json(reimbs);
-//         } catch (err) {
-//             resp.sendStatus(500);
-//         }
-//     }
-// ]);
-
-
- /**
-  * Find reimbursement by id
-  */
-
+/**
+ * Retrieves reimbursments depending on status
+ */
+reimbRouter.get(('/:status'), [
+    //authMiddleware('FManager'),
+    async (req: Request, resp: Response) => {
+        const status = req.params.status;
+        console.log(status);
+        try {
+            console.log("retrieving all reimbursements");
+            let reimbs = await reimbDao.findFromStatus(status);
+            resp.json(reimbs);
+        } catch (err) {
+            console.log(err);
+            resp.sendStatus(500);
+        }
+    }
+]);
 
 /**
  * Updates a reimbursement
@@ -49,4 +52,12 @@ reimbRouter.get('', [
 /**
  * Create reimbursement
  */
-
+reimbRouter.post('', async (req, resp) => {
+    try {
+        const id = await reimbDao.newReim(req.body);
+        resp.status(201);
+        resp.json(id);
+    } catch (err) {
+        resp.sendStatus(500);
+    }
+})

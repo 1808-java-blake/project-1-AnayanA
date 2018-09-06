@@ -1,7 +1,7 @@
 export class Reimb {
     id = 0;
     amount = 0;
-    dateSubmitted = {};
+    dateSubmitted: {};
     dateResolved = {};
     reimbDesciption = '';
     reimbAuthor = 0;
@@ -20,6 +20,5 @@ export class Reimb {
         reimbResolver && (this.reimbResolver = reimbResolver);
         reimbStatus && (this.reimbStatus = reimbStatus);
         reimbType && (this.reimbType = reimbType);
-
     }
 }

@@ -7,4 +7,4 @@ export const connectionPool = new Pool ({
     password: 'postpass1',
     port: 5432,
     max: 2
-})
+ })
