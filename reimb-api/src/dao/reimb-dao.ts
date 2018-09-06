@@ -35,12 +35,11 @@ export async function findFromStatus(status: string): Promise<Reimb[]> {
  /**
   * Retrieves all or select reimbursements submitted by a user
   */
-export async function selectReimb( status: string): Promise<Reimb[]> {
+export async function selectReimb(id: number): Promise<Reimb[]> {
     const client = await connectionPool.connect();
     try {
         const resp = await client.query(
-            `SELECT * FROM ers.reimbursement WHERE user_id = $1
-            ${(status === ' ') ? '' : `WHERE reimb_status = $2`}`, [status]);
+            `SELECT * FROM ers.reimbursement WHERE user_id = $1`, [id]);
         return resp.rows.map(reimbConverter);
     } finally {
         client.release();

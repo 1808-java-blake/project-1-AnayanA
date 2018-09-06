@@ -19,7 +19,6 @@ reimbRouter.get((''), [
             let reimbs = await reimbDao.findAll();
             resp.json(reimbs);
         } catch (err) {
-            console.log(err);
             resp.sendStatus(500);
         }
     }
@@ -45,9 +44,23 @@ reimbRouter.get(('/:status'), [
 ]);
 
 /**
- * Updates a reimbursement
+ * Gets a 
  */
 
+/**
+ * Updates a reimbursement
+ */
+reimbRouter.patch('', [
+    authMiddleware('FManager'),
+    async (req, resp) => {
+    try {
+        const id = await reimbDao.updateReimb(req.body);
+        resp.status(201);
+        resp.json(id);
+    } catch (err) {
+        resp.sendStatus(500);
+    }
+}]);
 
 /**
  * Create reimbursement

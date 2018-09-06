@@ -14,7 +14,7 @@ export class EmployeeComponent extends React.Component<any, any> {
   public componentDidMount() {
     const user = JSON.parse(localStorage.getItem("user") || '{}');
     console.log(user.id);
-    fetch(`http://localhost:3000/users/${user.id}`, {
+    fetch(`http://localhost:3000/reimb/${user.id}`, {
       credentials: 'include'
     })
     .then(resp => resp.json())
