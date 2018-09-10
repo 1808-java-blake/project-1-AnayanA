@@ -20,6 +20,7 @@ class App extends React.Component {
                 <Route path="/employee" component={EmployeeComponent} />
                 <Route path="/FManager" component={FManagerComponent} />
                 <Route path="/signIn" component={SignInComponent} />
+                <Route component={SignInComponent} />
               </Switch>
             </div>
           </div>

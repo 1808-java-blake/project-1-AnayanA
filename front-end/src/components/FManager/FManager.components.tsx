@@ -60,6 +60,19 @@ export class FManagerComponent extends React.Component <any, any>{
         console.log(err);
       })
     }
+
+    public filter = (e: any) => {
+      fetch(`http://localhost:3000/reimb/${e.target.value}`, {
+        credentials: 'include',
+      })
+      .then(resp => resp.json())
+      .then(reimbs => {
+        this.setState({reimbs});
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }
   
     public componentDidMount() {
       fetch(`http://localhost:3000/reimb/${''}`, {
@@ -103,8 +116,18 @@ export class FManagerComponent extends React.Component <any, any>{
               } 
             </tbody>
           </table>
-          
+          <div>
+          <select onChange={this.filter} 
+            id="filter" className="form-control" required>
+              <option value="">Filter by Status</option>
+              <option value="pending">pending</option>
+              <option value="Accepted" >Accepted</option>
+              <option value="Denied">Denied</option>
+          </select>
+          </div>
         </div>
+
+
       );
     }
   }
