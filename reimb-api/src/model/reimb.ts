@@ -3,7 +3,7 @@ export class Reimb {
     amount = 0;
     dateSubmitted: {};
     dateResolved = {};
-    reimbDesciption = '';
+    reimbDescription = '';
     reimbAuthor = 0;
     reimbResolver = 0;
     reimbStatus = '';
@@ -15,7 +15,7 @@ export class Reimb {
         amount && (this.amount = amount);
         dateSubmitted && (this.dateSubmitted = dateSubmitted);
         dateResolved && (this.dateResolved = dateResolved);
-        reimbDescription && (this.reimbDesciption = reimbDescription);
+        reimbDescription && (this.reimbDescription = reimbDescription);
         reimbAuthor && (this.reimbAuthor = reimbAuthor);
         reimbResolver && (this.reimbResolver = reimbResolver);
         reimbStatus && (this.reimbStatus = reimbStatus);

@@ -40,8 +40,13 @@ class SignInComponent extends React.Component<IProps, {}> {
         throw new Error('Failed to login');
       })
       .then(resp => {
+        console.log(resp[0]);
         localStorage.setItem('user', JSON.stringify(resp));
-        this.props.history.push('/home');
+        if (resp.role === 'employee'){
+        this.props.history.push('/employee');
+        } else {
+          this.props.history.push('/FManager');
+        }
       })
       .catch(err => {
         console.log(err);

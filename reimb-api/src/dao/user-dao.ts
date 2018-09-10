@@ -52,15 +52,9 @@ export async function findById(id: number): Promise<User> {
     try {
         const resp = await client.query(
             `SELECT * FROM ers.users u
-             LEFT JOIN  ers.reimbursement r
-             ON (u.users_id = r.reimb_author)
              WHERE u.users_id = $1`, [id]);
         const user = userConverter(resp.rows[0]); // get user data
-        
-        // get a users reimbursements from the query
-        resp.rows.forEach((reimb) => {
-            reimb.reimb_id && user.reimbs.push(reimbConverter(reimb));
-        })
+
         return user;
     } finally {
         client.release();

@@ -1,7 +1,6 @@
 import { connectionPool} from '../util/connection-util';
 import { Reimb } from '../model/reimb';
 import { reimbConverter} from '../util/reimb-converter';
-import { SqlReimb } from "../dto/sql-reimb";
 
 /**
  * Retrieve all reimbursements or reimbursements depending on status
@@ -39,7 +38,7 @@ export async function selectReimb(id: number): Promise<Reimb[]> {
     const client = await connectionPool.connect();
     try {
         const resp = await client.query(
-            `SELECT * FROM ers.reimbursement WHERE user_id = $1`, [id]);
+            `SELECT * FROM ers.reimbursement WHERE reimb_author = $1`, [id]);
         return resp.rows.map(reimbConverter);
     } finally {
         client.release();
@@ -55,9 +54,9 @@ export async function selectReimb(id: number): Promise<Reimb[]> {
     const client = await connectionPool.connect();
     try {
         const resp = await client.query(
-            `UPDATE reimbursement 
-            SET reimb_resolved = $1, reimb_ resolver = $2, reimb_status = $3 
-            WHERE reimb_id = $4`, [reimb.dateResolved, reimb.reimbResolver, reimb.reimbStatus, reimb.id]);
+            `UPDATE ers.reimbursement 
+            SET reimb_resolved = CURRENT_DATE, reimb_resolver = $1, reimb_status = $2 
+            WHERE reimb_id = $3`, [reimb.reimbResolver, reimb.reimbStatus, reimb.id]);
     } finally {
         client.release();
     }
@@ -66,14 +65,19 @@ export async function selectReimb(id: number): Promise<Reimb[]> {
   /**
    * Add a new reimbursement
    */
-export async function newReim(reimb: Reimb): Promise<number> {
-const client =await connectionPool.connect();
+export async function newReim(reimb: Reimb) {
+const client = await connectionPool.connect();
+console.log(reimb);
 try {
     const resp = await client.query(
-        `INSERT INTO ers.reimbursement (reimb_amount, reimb_submitted, reimb_description, reimb_author, reimb_status, reimb.type)
-        VALUE ($1, $2, $3, $4, $5, $6)`
-        [reimb.amount, reimb.dateSubmitted, reimb.reimbDesciption, reimb.reimbAuthor, reimb.reimbStatus, reimb.reimbType]);
+        `INSERT INTO ers.reimbursement (reimb_amount, reimb_submitted, reimb_description, reimb_author, reimb_status, reimb_type)
+        VALUES ($1, CURRENT_DATE::date, $2, $3, 'pending', $4)
+        RETURNING reimb_id`,
+        [reimb.amount, reimb.reimbDescription, reimb.reimbAuthor, reimb.reimbType]);
+        console.log(resp.rows);
     return resp.rows[0].id;
+} catch (err) {
+    console.log(err);
 } finally {
     client.release();
 }
