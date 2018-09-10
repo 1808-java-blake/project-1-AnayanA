@@ -27,7 +27,7 @@ export class EmployeeComponent extends React.Component<RouteComponentProps<{}> ,
         reimbAuthor: 0,
         reimbDescription: '',
         reimbType: '',
-        reimbStatus: ''
+        reimbStatus: 'pending'
       },
       reimbs: [],
 

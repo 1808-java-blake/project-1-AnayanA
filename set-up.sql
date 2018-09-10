@@ -2,13 +2,6 @@ CREATE SCHEMA ers;
 
 SET SCHEMA 'ers';
 
-CREATE TABLE user_roles (
-	user_role_id serial PRIMARY KEY,
-	user_role VARCHAR(10)
-);
-
-SET SCHEMA 'ers';
-
 CREATE TABLE users (
 	users_id SERIAL PRIMARY KEY,
 	username VARCHAR(50) UNIQUE NOT NULL,

@@ -55,7 +55,7 @@ export async function selectReimb(id: number): Promise<Reimb[]> {
     try {
         const resp = await client.query(
             `UPDATE ers.reimbursement 
-            SET reimb_resolved = CURRENT_DATE, reimb_resolver = $1, reimb_status = $2 
+            SET reimb_resolved = localtimestamp(0), reimb_resolver = $1, reimb_status = $2 
             WHERE reimb_id = $3`, [reimb.reimbResolver, reimb.reimbStatus, reimb.id]);
     } finally {
         client.release();
@@ -71,7 +71,7 @@ console.log(reimb);
 try {
     const resp = await client.query(
         `INSERT INTO ers.reimbursement (reimb_amount, reimb_submitted, reimb_description, reimb_author, reimb_status, reimb_type)
-        VALUES ($1, CURRENT_DATE::date, $2, $3, 'pending', $4)
+        VALUES ($1, localtimestamp(0), $2, $3, 'pending', $4)
         RETURNING reimb_id`,
         [reimb.amount, reimb.reimbDescription, reimb.reimbAuthor, reimb.reimbType]);
         console.log(resp.rows);
