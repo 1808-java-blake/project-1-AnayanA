@@ -13,12 +13,13 @@ export class EmployeeComponent extends React.Component<any, any> {
 
   public componentDidMount() {
     const user = JSON.parse(localStorage.getItem("user") || '{}');
-    console.log(user.id);
-    fetch(`http://localhost:3000/reimb/${user.id}`, {
-      credentials: 'include'
+    console.log(`${user.id}`);
+    fetch(`http://localhost:3000/reimb/id/${user.id}`, {
+      credentials: 'include',
     })
     .then(resp => resp.json())
     .then(reimbs => {
+      console.log(reimbs);
       this.setState({reimbs});
     })
     .catch(err => {
@@ -43,7 +44,7 @@ export class EmployeeComponent extends React.Component<any, any> {
               this.state.reimbs.map((reimb: any) => (
                 <tr key ={reimb.id}>
                   <td>{reimb.reimbType}</td>
-                  <td> {reimb.reimbAmount} </td>
+                  <td> {reimb.amount} </td>
                   <td> {reimb.reimbDescription} </td>
                   <td> {reimb.reimbStatus} </td>
                 </tr>
